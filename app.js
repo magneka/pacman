@@ -59,10 +59,14 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (layout[i] === 3) {
                 squares[i].classList.add('power-pellet')
             }
-
         }
     }
 
     createBoard()
+
+    // Starting position of pac-man
+    let pacmanCurrentIndex = 490
+
+    squares[pacmanCurrentIndex].classList.add('pac-man')
 
 })
