@@ -82,6 +82,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     && !squares[pacmanCurrentIndex - 1].classList.contains('ghost-lair')
                 )
                     pacmanCurrentIndex -= 1
+                
+                // Check if pacman is on the left exit
+                if (pacmanCurrentIndex - 1 === 363) {
+                    pacmanCurrentIndex = 391
+                }
+                
                 break
             case 38:
                 if (pacmanCurrentIndex - width !== 0 && !squares[pacmanCurrentIndex - width].classList.contains('wall')
@@ -92,6 +98,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (pacmanCurrentIndex % width < width - 1 && !squares[pacmanCurrentIndex + 1].classList.contains('wall')
                     && !squares[pacmanCurrentIndex + 1].classList.contains('ghost-lair'))
                     pacmanCurrentIndex += 1
+                
+                // Check if pacman is on the right exit
+                if (pacmanCurrentIndex + 1 === 392) {
+                    pacmanCurrentIndex = 364
+                }
                 break
             case 40:
                 if (pacmanCurrentIndex + width < width * width && !squares[pacmanCurrentIndex + width].classList.contains('wall')
