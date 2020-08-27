@@ -83,12 +83,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     && !squares[pacmanCurrentIndex - 1].classList.contains('ghost-lair')
                 )
                     pacmanCurrentIndex -= 1
-                
+
                 // Check if pacman is on the left exit
                 if (pacmanCurrentIndex - 1 === 363) {
                     pacmanCurrentIndex = 391
                 }
-                
+
                 break
             case 38:
                 if (pacmanCurrentIndex - width !== 0 && !squares[pacmanCurrentIndex - width].classList.contains('wall')
@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (pacmanCurrentIndex % width < width - 1 && !squares[pacmanCurrentIndex + 1].classList.contains('wall')
                     && !squares[pacmanCurrentIndex + 1].classList.contains('ghost-lair'))
                     pacmanCurrentIndex += 1
-                
+
                 // Check if pacman is on the right exit
                 if (pacmanCurrentIndex + 1 === 392) {
                     pacmanCurrentIndex = 364
@@ -154,4 +154,28 @@ document.addEventListener('DOMContentLoaded', () => {
         squares[ghost.currentIndex].classList.add(ghost.className)
         squares[ghost.currentIndex].classList.add('ghost')
     });
+
+    ghosts.forEach(ghost => moveGhost(ghost));
+
+    // Function to move ghosts
+    function moveGhost(ghost) {
+        const directions = [-1, +1, width, -width]
+        let direction = directions[Math.floor(Math.random() * directions.length)]
+
+        ghost.timerId = setInterval(function () {
+            // if then next square your ghost is going to does NOT conatain a wall and a ghost you can go there 
+            if (!squares[ghost.currentIndex + direction].classList.contains('wall') && !squares[ghost.currentIndex + direction].classList.contains('ghost')) {
+                // You can go there
+                // Remove all ghost related classes
+                squares[ghost.currentIndex].classList.remove(ghost.className, 'ghost', 'scared-ghost')
+                // change currentindex to new safe space
+                ghost.currentIndex += direction
+                // Redraw the ghost in the new safe space
+                squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
+            } else {
+                // else find a new direction to try
+                direction = directions[Math.floor(Math.random() * directions.length)]
+            }
+        }, ghost.speed)
+    }
 })
